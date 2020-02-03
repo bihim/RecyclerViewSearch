@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:elevation="10dp"
+    android:backgroundTint="#1abc9c"
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="20dp">
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/recycler_text"
+        android:text="Hello"
+        android:textColor="#FFF"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</androidx.cardview.widget.CardView>
