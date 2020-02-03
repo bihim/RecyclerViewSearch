@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <EditText
+        android:id="@+id/search_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_set"
         android:layout_width="match_parent"
