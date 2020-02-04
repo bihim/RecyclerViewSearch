@@ -1,28 +1,46 @@
 package com.artificialsoft.recyclerviewsearch;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemsHolder> implements Filterable
 {
-    ArrayList<Items> items;
-    ArrayList<Items> copyItems;
+   ArrayList<Items> items;
+   ArrayList<Items> copyItems;
+   OnItemClickListener onItemClickListener; //here implement your code for button
+
+    public interface OnItemClickListener
+    {
+        void onButtonClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener)
+    {
+        this.onItemClickListener = onItemClickListener;
+    }
+
 
     @NonNull
     @Override //views for recyclerview
     public ItemsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyler_view_layout, parent, false);
-        return new ItemsHolder(view);
+        return new ItemsHolder(view, onItemClickListener);
     }
 
     //itemadapter constructor
@@ -40,6 +58,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemsHolder> i
 
         //setting text of that class by bindviewholder
         holder.textView.setText(currentItems.itemName);
+        holder.textView1.setText(currentItems.contactDetails);
+        Glide.with(holder.imageView.getContext()).load(currentItems.profileURL).into(holder.imageView);
     }
 
     @Override
@@ -93,10 +113,31 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemsHolder> i
     public static class ItemsHolder extends RecyclerView.ViewHolder
     {
         TextView textView;
-        public ItemsHolder(@NonNull View itemView)
+        TextView textView1;
+        Button button;
+        ImageView imageView;
+        public ItemsHolder(@NonNull final View itemView, final OnItemClickListener listener)
         {
             super(itemView);
             textView = itemView.findViewById(R.id.recycler_text);
+            button = itemView.findViewById(R.id.test_button);
+            textView1 = itemView.findViewById(R.id.description);
+            imageView = itemView.findViewById(R.id.profile_image);
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    if (listener!= null)
+                    {
+                        int position = getAdapterPosition();
+                        if (position!=RecyclerView.NO_POSITION)
+                        {
+                            listener.onButtonClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }
